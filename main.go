@@ -1,7 +1,9 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"os"
 	"strings"
 )
 
@@ -12,6 +14,31 @@ func cleanInput(s string) []string {
 
 func main() {
 
-	cln := cleanInput("  hello    wORLD    YEDS sir")
-	fmt.Println(cln[1])
+	scanner := bufio.NewScanner(os.Stdin)
+
+	for {
+		fmt.Print("Pokedex > ")
+
+		if !scanner.Scan() {
+			break
+		}
+
+		input := strings.TrimSpace(scanner.Text())
+		userCommands := cleanInput(input)
+
+		if len(userCommands) == 0 {
+			continue
+		}
+
+		command, exists := getCommands()[userCommands[0]]
+		if exists {
+			if err := command.callback(); err != nil {
+				fmt.Printf("Error executing command: %v", command.name)
+			}
+		} else {
+			fmt.Println("Unknown command", userCommands[0])
+		}
+
+	}
+
 }
