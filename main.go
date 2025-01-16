@@ -14,6 +14,8 @@ func cleanInput(s string) []string {
 
 func main() {
 
+	config := &Config{}
+
 	scanner := bufio.NewScanner(os.Stdin)
 
 	for {
@@ -32,7 +34,7 @@ func main() {
 
 		command, exists := getCommands()[userCommands[0]]
 		if exists {
-			if err := command.callback(); err != nil {
+			if err := command.callback(config); err != nil {
 				fmt.Printf("Error executing command: %v", command.name)
 			}
 		} else {
