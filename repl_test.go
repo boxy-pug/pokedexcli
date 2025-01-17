@@ -2,6 +2,8 @@ package main
 
 import (
 	"testing"
+
+	"github.com/boxy-pug/pokedexcli/utils"
 )
 
 func TestCleanInput(t *testing.T) {
@@ -23,7 +25,7 @@ func TestCleanInput(t *testing.T) {
 		},
 	}
 	for _, c := range cases {
-		actual := cleanInput(c.input)
+		actual := utils.CleanInput(c.input)
 
 		if len(actual) != len(c.expected) {
 			t.Errorf("For input %q, expected len %d got: %d", c.input, len(c.expected), len(actual))

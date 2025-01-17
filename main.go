@@ -5,17 +5,14 @@ import (
 	"fmt"
 	"os"
 	"strings"
+
+	"github.com/boxy-pug/pokedexcli/commands"
+	"github.com/boxy-pug/pokedexcli/config"
+	"github.com/boxy-pug/pokedexcli/utils"
 )
 
-func cleanInput(s string) []string {
-	clean := strings.Fields(strings.ToLower(s))
-	return clean
-}
-
 func main() {
-
-	config := &Config{}
-
+	config := &config.Config{}
 	scanner := bufio.NewScanner(os.Stdin)
 
 	for {
@@ -26,16 +23,16 @@ func main() {
 		}
 
 		input := strings.TrimSpace(scanner.Text())
-		userCommands := cleanInput(input)
+		userCommands := utils.CleanInput(input)
 
 		if len(userCommands) == 0 {
 			continue
 		}
 
-		command, exists := getCommands()[userCommands[0]]
+		command, exists := commands.GetCommands()[userCommands[0]]
 		if exists {
-			if err := command.callback(config); err != nil {
-				fmt.Printf("Error executing command: %v", command.name)
+			if err := command.Callback(config); err != nil {
+				fmt.Printf("Error executing command: %v", command.Name)
 			}
 		} else {
 			fmt.Println("Unknown command", userCommands[0])
