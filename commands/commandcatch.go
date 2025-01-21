@@ -32,6 +32,7 @@ func commandCatch(config *config.Config) error {
 
 	if catchPokemon(pokemon) {
 		fmt.Printf("%v was caught!\n", pokemon.Name)
+		fmt.Println("You may now inspect it with the inspect command.")
 		pokedex[pokemon.Name] = pokemon
 	} else {
 		fmt.Printf("%v escaped\n", pokemon.Name)

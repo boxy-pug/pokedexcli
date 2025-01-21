@@ -35,7 +35,7 @@ func main() {
 		command, exists := commands.GetCommands()[commandName]
 		if exists {
 			if err := command.Callback(config); err != nil {
-				fmt.Printf("Error executing command: %v", command.Name)
+				fmt.Printf("Error executing command: %v\n", command.Name)
 			}
 		} else {
 			fmt.Println("Unknown command", commandName)
