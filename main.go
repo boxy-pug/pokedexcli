@@ -29,13 +29,16 @@ func main() {
 			continue
 		}
 
-		command, exists := commands.GetCommands()[userCommands[0]]
+		commandName := userCommands[0]
+		config.Args = userCommands[1:]
+
+		command, exists := commands.GetCommands()[commandName]
 		if exists {
 			if err := command.Callback(config); err != nil {
 				fmt.Printf("Error executing command: %v", command.Name)
 			}
 		} else {
-			fmt.Println("Unknown command", userCommands[0])
+			fmt.Println("Unknown command", commandName)
 		}
 
 	}

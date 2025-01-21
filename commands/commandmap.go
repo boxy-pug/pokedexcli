@@ -35,12 +35,12 @@ func commandMapBack(config *config.Config) error {
 func handleLocations(url string, config *config.Config) error {
 	data, err := getCachedOrFetch(url)
 	if err != nil {
-		return fmt.Errorf("Error getting cache or fetching: ", err)
+		return fmt.Errorf("Error getting cache or fetching: %v", err)
 	}
 
 	locationResponse, err := parseLocations(data)
 	if err != nil {
-		return fmt.Errorf("Error parsing locations: ", err)
+		return fmt.Errorf("Error parsing locations: %v", err)
 	}
 
 	printLocations(locationResponse)
@@ -61,13 +61,13 @@ func getCachedOrFetch(url string) ([]byte, error) {
 
 	resp, err := http.Get(url)
 	if err != nil {
-		return nil, fmt.Errorf("error fetching location areas: %w", err)
+		return nil, fmt.Errorf("error fetching location areas: %v", err)
 	}
 	defer resp.Body.Close()
 
 	data, err = io.ReadAll(resp.Body)
 	if err != nil {
-		return nil, fmt.Errorf("error reading response body", err)
+		return nil, fmt.Errorf("error reading response body: %v", err)
 	}
 	cache.Add(url, data)
 
@@ -79,7 +79,7 @@ func parseLocations(data []byte) (pokeapi.LocationAreaResponse, error) {
 	var locationResponse pokeapi.LocationAreaResponse
 	err := json.Unmarshal(data, &locationResponse)
 	if err != nil {
-		return locationResponse, fmt.Errorf("error parsing json resp: ", err)
+		return locationResponse, fmt.Errorf("error parsing json resp: %v", err)
 	}
 	return locationResponse, nil
 }
